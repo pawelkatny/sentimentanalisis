@@ -1,7 +1,7 @@
 import re
 import pandas as pd
 import numpy as np
-from patterns import patterns_list
+from patterns import patterns_list #regex patterns list
 import Loader as ld  # prints current progress
 
 
@@ -10,12 +10,15 @@ class RawAnalysis():
 
     def __init__(self, data):
         self.data = data
-        self.tweets = data['Tweet Content']
+        self.tweets = data['Tweet']
         self.size = len(data)
 
     def occurence_counter(self, key):  # emots, hashes counter - returns descending sorted array
                                         # and panda data frame with stores hash count for every tweet
-        # def create_data_frame()
+        def create_data_frame(sorted_arr):
+            data_frame_sorted = pd.DataFrame(sorted_arr)
+            data_sum = data_frame_sorted.sum(numeric_only=True)
+            return (data_frame_sorted, data_sum.at[1])
 
         key_list = []
 
@@ -40,8 +43,22 @@ class RawAnalysis():
 
         sorted_key_list = sorted(key_list, key=lambda x: x[1], reverse=True)
 
-        # data_key_list = pd.DataFrame()
-        #
-        # data_key_list.append()
-        return sorted_key_list
+        return create_data_frame(sorted_key_list)
 
+
+    def tweets_len(self):
+        loader = ld.Loader(self.size)
+        arr_len = np.array([])
+        for tweet in self.tweets:
+            arr_len = np.append(arr_len, len(tweet))
+            loader.loading()
+        data_arr_len = pd.DataFrame(arr_len, columns=['Tweet text length'])
+        data_sum_len = data_arr_len.sum(numeric_only=True)
+
+        return data_arr_len, data_sum_len.at['Tweet text length']
+
+    def append_data_frame(self, array):
+        data_frame = self.data
+        data_frame.insert(5, 'Tweet Length', array)
+
+        return data_frame, data_frame.describe()

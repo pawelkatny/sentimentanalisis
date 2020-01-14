@@ -10,7 +10,7 @@ class Loader():
     def loading(self):
         self.current += 1
         percent = int(self.current/self.size *100)
-        time.sleep(0.01)
+        time.sleep(0.001)
         sys.stdout.write('\rProgress ' + str(percent) + '%')
         sys.stdout.flush()
         if percent == 100:
