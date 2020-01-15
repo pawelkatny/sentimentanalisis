@@ -1,6 +1,5 @@
 import re
 import pandas as pd
-import numpy as np
 from patterns import patterns_list #regex patterns list
 import Loader as ld  # prints current progress
 
@@ -13,12 +12,11 @@ class RawAnalysis():
         self.tweets = data['Tweet']
         self.size = len(data)
 
-    def occurence_counter(self, key):  # emots, hashes counter - returns descending sorted array
-                                        # and panda data frame with stores hash count for every tweet
+    def occurence_counter(self, key):  # emots, hash counter - returns descending sorted array
+                                        # and panda data frame wich stores hash count for every tweet
         def create_data_frame(sorted_arr):
             data_frame_sorted = pd.DataFrame(sorted_arr)
-            data_sum = data_frame_sorted.sum(numeric_only=True)
-            return (data_frame_sorted, data_sum.at[1])
+            return data_frame_sorted
 
         key_list = []
 
@@ -46,19 +44,18 @@ class RawAnalysis():
         return create_data_frame(sorted_key_list)
 
 
-    def tweets_len(self):
-        loader = ld.Loader(self.size)
-        arr_len = np.array([])
-        for tweet in self.tweets:
-            arr_len = np.append(arr_len, len(tweet))
-            loader.loading()
-        data_arr_len = pd.DataFrame(arr_len, columns=['Tweet text length'])
-        data_sum_len = data_arr_len.sum(numeric_only=True)
+    def tweets_len(self): #returns data frame with tweet`s length
 
-        return data_arr_len, data_sum_len.at['Tweet text length']
+        f = lambda x: len(x) # function to get length of every tweet
+        data_tweet_len = self.tweets.apply(f)
+        data_tweet_len.name = 'Tweet Length'
 
-    def append_data_frame(self, array):
-        data_frame = self.data
-        data_frame.insert(5, 'Tweet Length', array)
+        return  data_tweet_len
 
-        return data_frame, data_frame.describe()
+
+    def numeric_data_frame(self, array): #returns data frame with numeric values
+                                            #for retweets, likes and tweet length
+        numeric_data_frame = self.data[['Retweets', 'Likes']]
+        numeric_data_frame.insert(2, 'Tweet Length', array)
+
+        return numeric_data_frame
