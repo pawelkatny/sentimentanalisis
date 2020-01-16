@@ -7,5 +7,5 @@ def DeleteDuplicateValues():
   data.drop_duplicates(subset ="Tweet", 
                      keep = False, inplace = True)
 
-  data.to_csv('tweets_final1.csv')
+  data.to_csv('tweets_final.csv')
 
