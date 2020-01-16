@@ -51,10 +51,3 @@ class InitialAnalysis():
 
         return  data_tweet_len
 
-
-    def append_data_frame(self, array, array_name): #appends specific data frame
-
-        append_data_frame = self.data
-        append_data_frame.insert(len(append_data_frame.columns), array_name, array)
-
-        return append_data_frame

@@ -1,5 +1,5 @@
 import re
-from patterns import patterns_list as patterns
+from Patterns import patterns_list as patterns
 
 class TextProcessing():
 
