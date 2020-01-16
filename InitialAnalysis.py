@@ -4,7 +4,7 @@ from patterns import patterns_list #regex patterns list
 import Loader as ld  # prints current progress
 
 
-class RawAnalysis():
+class InitialAnalysis():
     patterns = patterns_list
 
     def __init__(self, data):
@@ -44,7 +44,7 @@ class RawAnalysis():
         return create_data_frame(sorted_key_list)
 
 
-    def tweets_len(self): #returns data frame with tweet`s length
+    def tweets_len(self): #returns data frame tweet length
 
         f = lambda x: len(x) # function to get length of every tweet
         data_tweet_len = self.tweets.apply(f)
@@ -53,9 +53,9 @@ class RawAnalysis():
         return  data_tweet_len
 
 
-    def numeric_data_frame(self, array): #returns data frame with numeric values
-                                            #for retweets, likes and tweet length
-        numeric_data_frame = self.data[['Retweets', 'Likes']]
-        numeric_data_frame.insert(2, 'Tweet Length', array)
+    def append_data_frame(self, array, array_name): #appends specific data frame
 
-        return numeric_data_frame
+        append_data_frame = self.data
+        append_data_frame.insert(len(append_data_frame.columns), array_name, array)
+
+        return append_data_frame

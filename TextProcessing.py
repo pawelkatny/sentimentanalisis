@@ -1,7 +1,7 @@
 import re
 from patterns import patterns_list as patterns
 
-class TextProcess():
+class TextProcessing():
 
     def __init__(self, tweets):
         self.tweets = tweets
@@ -10,6 +10,7 @@ class TextProcess():
         clean_tweet = re.sub(patterns['http'], '', tweet)
         clean_tweet = re.sub(patterns['at'], '', clean_tweet)
         clean_tweet = re.sub(patterns['hash'], '', clean_tweet)
+        clean_tweet = re.sub(patterns['amp'], 'and', clean_tweet)
 
         return clean_tweet
 

@@ -11,31 +11,41 @@ def load_file(file_name):
 
 def initial_analysis(data):
     #creating new object of InitialAnalysis class
-    analysis = init.RawAnalysis(data)
+    analysis = init.InitialAnalysis(data)
 
     #counting all hashes in file
-    hash = analysis.occurence_counter('hash')
+    hash_tags = analysis.occurence_counter('hash')
 
     #apply function to 'Tweet' column to count length of every tweet
     tweets_len = analysis.tweets_len()
 
-    #returns only data frame with quantity of retweets, likes and tweet length
-    numeric_data = analysis.numeric_data_frame(tweets_len)
+    #returns data frame with added tweet length
+    new_data = analysis.append_data_frame(tweets_len, tweets_len.name)
 
-    return hash, numeric_data
+    return hash_tags, new_data
+
+
+def process_text(data):
+
+    text_process = tp.TextProcessing(data['Tweet'])
+    clean_tweets = text_process.clean_all_tweets()
+
+    return  clean_tweets
 
 def testing(some_data):
-    print()
+    print(some_data)
 
 
 def app_init():
 
     data = load_file(file)
 
-    hash, numeric_data = initial_analysis(data)
+    hash, new_data = initial_analysis(data)
+
+    clean_tweets = process_text(data)
 
     print(hash)
-    print(numeric_data)
-
+    print(new_data)
+    print(clean_tweets)
 
 app_init()
