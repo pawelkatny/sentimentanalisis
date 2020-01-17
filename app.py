@@ -3,6 +3,7 @@ import TextProcessing as tp
 import Prediction as pre
 from Functions import *
 import Sentiment as st
+import pandas as pd
 
 file = '/mnt/02546E3B546E3199/Study/Python/sentimentanalysis/data/tweety.csv'
 path = '/mnt/02546E3B546E3199/Study/Python/sentimentanalysis/data/'
@@ -71,8 +72,8 @@ def app_init():
     #run sentiment analysis and return new data frame with appended columns with sentiment analysis
     sentiment_data = analyse_sentiment(initial_data, clean_tweets)
 
-    test = sentiment_data['Nltk_Sentiment']
-    prediction = pre.Prediction(vectors, test)
+    sentiment_values = sentiment_data['Nltk_Sentiment']
+    prediction = pre.Prediction(vectors, sentiment_values)
     prediction_accuracy, sentiment_prediction = prediction.predict_sentiment()
 
     sentiment_data = append_to_data_frame(sentiment_data, 'Predicted_sentiment', sentiment_prediction)
