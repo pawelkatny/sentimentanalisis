@@ -1,16 +1,15 @@
 import InitialAnalysis as init
 import TextProcessing as tp
-import pandas as pd
+import Prediction as pre
 from Functions import *
 import Sentiment as st
 
-file = '/mnt/02546E3B546E3199/Study/Python/sentimentanalysis/data/tweets_final.csv'
+file = '/mnt/02546E3B546E3199/Study/Python/sentimentanalysis/data/tweety.csv'
 path = '/mnt/02546E3B546E3199/Study/Python/sentimentanalysis/data/'
 
 def load_file(file_name):
     csv_data = pd.read_csv(file, names=['Date', 'Tweet', 'Language', 'Retweets', 'Likes'], encoding='utf-8')
 
-    print(csv_data)
     return csv_data
 
 def save_file(file_name, data_frame):
@@ -54,9 +53,8 @@ def analyse_sentiment(data, tweets):
 
     return vader_data
 
-def show_results(some_data):
-    print(some_data)
-
+def show_results(args):
+    print(f'{args[0]}:\n {args[1]}')
 
 def app_init():
 
@@ -69,20 +67,23 @@ def app_init():
     clean_tweets, deep_clean_tweets, vectors = process_text(data)
 
     #adds clean and lemmatised sentences to initial_data frame
-    initial_data = append_to_data_frame(initial_data, 'Lemmatised_text', deep_clean_tweets)
+    initial_data = append_to_data_frame(initial_data, 'Lemmatized_text', deep_clean_tweets)
     #run sentiment analysis and return new data frame with appended columns with sentiment analysis
     sentiment_data = analyse_sentiment(initial_data, clean_tweets)
 
+    test = sentiment_data['Nltk_Sentiment']
+    prediction = pre.Prediction(vectors, test)
+    prediction_accuracy, sentiment_prediction = prediction.predict_sentiment()
 
-    # print(vectors)
-    # print(hash)
-    # print(new_data)
-    # print(clean_tweets)
-    # print(deep_clean_tweets)
-    print(sentiment_data)
-    # print(sentiment_data.describe().astype(float))
-    print(sentiment_data.describe().applymap("{:.2f}".format))
-    print(sentiment_data['Nltk_Sentiment'].describe())
+    sentiment_data = append_to_data_frame(sentiment_data, 'Predicted_sentiment', sentiment_prediction)
+
     save_file('new_data_frame.csv', sentiment_data)
+
+    print_sent = ['Sentiment analysis results', sentiment_data.iloc[:, 5:]]
+    print_acc = ['Prediction accuracy for machine learning model', prediction_accuracy]
+
+    show_results(print_sent)
+    show_results(print_acc)
+
 
 app_init()

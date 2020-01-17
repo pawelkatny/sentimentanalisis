@@ -56,7 +56,7 @@ class TextProcessing():
         return deep_clean_tweets
 
     def vectorise(self):
-        tfid_converter = TfidfVectorizer(max_features=100, min_df=1, max_df=0.7)
+        tfid_converter = TfidfVectorizer(max_features=1000, min_df=1, max_df=0.7)
         vectors_text = tfid_converter.fit_transform(self.deep_clean_tweets)
         self.vectors = vectors_text
 

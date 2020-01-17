@@ -1,7 +1,7 @@
 import re
 from Patterns import patterns_list as patterns #regex patterns list
 import Loader as ld  # prints current progress
-from Functions import *
+import pandas as pd
 
 class InitialAnalysis():
 
