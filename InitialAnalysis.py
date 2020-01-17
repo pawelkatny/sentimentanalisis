@@ -47,7 +47,7 @@ class InitialAnalysis():
 
         f = lambda x: len(x) # function to get length of every tweet
         data_tweet_len = self.tweets.apply(f)
-        data_tweet_len.name = 'Tweet Length'
+        data_tweet_len.name = 'Tweet_Length'
 
         return  data_tweet_len
 
