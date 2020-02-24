@@ -41,4 +41,5 @@ Methods:
 ## Other modules:
 
 **Functions** - module used to import function that adds array to data frame
+
 **Patterns** - list of regex patterns for text processing
