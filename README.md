@@ -5,6 +5,7 @@ Python sentiment analysis of tweets content for school project.
 ## Classes overview:
 
 **InitialAnalysis** - initial data analysis
+
 Methods: 
   - occurence_counter()  -  returns descending sorted array
   and panda data frame which stores hash (or any other chosen element) count for every tweet
@@ -13,6 +14,7 @@ Methods:
 
 
 **TextProcessing** - cleaning, lemmatizing and vectorizing text
+
 Methods:
   - clean_all_tweets() - removes specials expressions like http, @, #, & and number from every tweet
 
